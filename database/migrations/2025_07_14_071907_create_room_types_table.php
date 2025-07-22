@@ -15,7 +15,8 @@ return new class extends Migration
         $table->id();
         $table->string('name')->unique();
         $table->text('description')->nullable();
-        // $table->text('')
+        $table->integer('cost_per_night');
+        $table->integer('max_rooms')->default(10);
         $table->timestamps();
     });
 }

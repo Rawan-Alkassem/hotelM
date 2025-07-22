@@ -24,6 +24,11 @@ class DatabaseSeeder extends Seeder
 
  RolesAndPermissionsSeeder::class,
      UsersTableSeeder::class,
-]);
+        \Database\Seeders\Hamza\RoomTypeSeeder::class,
+      \Database\Seeders\Hamza\ServiceSeeder::class,
+               \Database\Seeders\Hamza\RoomTypeServiceSeeder::class,
+ \Database\Seeders\Hamza\RoomSeeder::class,
+  \Database\Seeders\Hamza\Booking::class,
+            ]);
     }
 }

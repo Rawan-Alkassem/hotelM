@@ -15,8 +15,14 @@ class Booking extends Model {
         'status',
         'check_in_date',
         'check_out_date',
+        'total_price'
     ];
-
+protected $dates = [
+    'check_in_date',
+    'check_out_date',
+    'created_at',
+    'updated_at'
+];  
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }

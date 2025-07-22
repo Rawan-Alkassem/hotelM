@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class RoomType extends Model
 {
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description','max_rooms','cost_per_night'];
 
     public function rooms()
     {
@@ -16,7 +16,7 @@ class RoomType extends Model
 
     public function services()
     {
-        return $this->belongsToMany(Service::class, 'room_type_service');
+        return $this->belongsToMany(Service::class, 'room_type_services');
     }
 }
 

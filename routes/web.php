@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ReceptionistController;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\BookingController; 
 Route::get('/', function () {
     return view('welcome');
 });
@@ -21,3 +23,20 @@ require __DIR__.'/auth.php';
 Route::get('/home', function () {
     return view('home');
 })->name('home');
+
+// route::get('/recp',[recep])
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/receptionist', [ReceptionistController::class, 'index'])
+         ->name('receptionist.dashboard');
+});
+
+
+    Route::get('/report', [CalendarController::class, 'report'])->name('booking.report');
+
+Route::resource('bookings', BookingController::class);
+
+    Route::get('/calendar/{year?}/{month?}', [CalendarController::class, 'show'])
+    ->where(['year' => '\d{4}', 'month' => '\d{1,2}'])
+    ->name('calendar');
