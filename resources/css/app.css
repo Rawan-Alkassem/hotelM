@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Calendar Styles */
+.calendar-day {
+    min-height: 100px;
+}
+
+.calendar-day:hover {
+    background-color: #f0f9ff;
+}
+
+.calendar-day-number {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-day-number.today {
+    background-color: #3b82f6;
+    color: white;
+    border-radius: 50%;
+}
