@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReceptionistController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\BookingController; 
+
 Route::get('/', function () {
     return view('welcome');
 });

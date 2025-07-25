@@ -12,8 +12,7 @@ return new class extends Migration
       public function up(): void {
         Schema::create('CheckInOutLogs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('booking_id')->constrained('Bookings')->onDelete('cascade');
-            $table->foreignId('receptionist_id')->constrained('Users')->onDelete('cascade');
+            $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade');
             $table->dateTime('check_in_time')->nullable();
             $table->dateTime('check_out_time')->nullable();
             $table->timestamps();

@@ -9,13 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-  public function up(): void {
-       Schema::create('room_type_service', function (Blueprint $table) {
+    public function up(): void
+    {
+       Schema::create('room_images', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('room_type_id')->constrained('room_types');
-    $table->foreignId('service_id')->constrained('services');
+    $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade');
+    $table->string('image_url');
     $table->timestamps();
 });
+
     }
 
     /**
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('room_type_services');
+        Schema::dropIfExists('room_images');
     }
 };

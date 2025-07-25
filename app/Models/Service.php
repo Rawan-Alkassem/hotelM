@@ -8,12 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
 
-    protected $fillable = ['name', 'description'];
+   protected $fillable = [
+    'name', 
+    'description', 
+    'image_url'
+];
 
-    public function roomTypes()
+       public function roomTypes()
     {
-        return $this->belongsToMany(RoomType::class, 'room_type_services');
+        return $this->belongsToMany(RoomType::class, 'room_type_service');
     }
+
      public function rooms()
     {
         return $this->belongsToMany(Room::class);

@@ -10,18 +10,26 @@ class Room extends Model {
 
     protected $table = 'Rooms';
 
-    protected $fillable = [
-        'room_number',
+        protected $fillable = [
+        'room_number', 
         'room_type_id',
-        'status',
+         'price',
+          'status'
     ];
 
-    public function roomType() {
+        public function type()
+    {
         return $this->belongsTo(RoomType::class, 'room_type_id');
     }
 
-    public function bookings() {
-        return $this->hasMany(Booking::class, 'room_id');
+    public function images()
+    {
+        return $this->hasMany(RoomImage::class);
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
     }
 }
 

@@ -11,13 +11,13 @@ return new class extends Migration
      */
    
    public function up(): void {
-        Schema::create('BookingReviews', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('booking_id')->constrained('Bookings')->onDelete('cascade');
-            $table->integer('rating');
-            $table->text('comment')->nullable();
-            $table->timestamps();
-        });
+        Schema::create('booking_reviews', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade');
+    $table->integer('rating');
+    $table->text('comment')->nullable();
+    $table->timestamps();
+});
     }
     /**
      * Reverse the migrations.
