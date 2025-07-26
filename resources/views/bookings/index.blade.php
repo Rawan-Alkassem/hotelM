@@ -1,12 +1,20 @@
 
 <x-app-layout>
- 
+
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold text-gray-800">Bookings Management</h1>
-        <a href="{{ route('bookings.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+{{-- اخفاء زر اضافة الحجوزات عن مدير الفندق لانها ليست صلاحياته Hotel Manager --}}
+        @hasanyrole('Admin|Receptionist')
+    <a href="{{ route('bookings.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+        Create New Booking
+    </a>
+@endhasanyrole
+
+
+        {{-- <a href="{{ route('bookings.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
             Create New Booking
-        </a>
+        </a> --}}
     </div>
 
     @if(session('success'))
@@ -35,12 +43,12 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach($bookings as $booking)
                     <tr>
-               
+
                         <td class="px-6 py-4 whitespace-nowrap">{{ $booking->id }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $booking->user->full_name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $booking->room->room_number }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 py-1 text-xs rounded-full 
+                            <span class="px-2 py-1 text-xs rounded-full
                                 @if($booking->status == 'confirmed') bg-green-100 text-green-800
                                 @elseif($booking->status == 'cancelled') bg-red-100 text-red-800
                                 @elseif($booking->status == 'finished') bg-blue-100 text-blue-800
@@ -52,6 +60,10 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">${{ number_format($booking->total_price, 2) }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
+
+
+@hasanyrole('Admin|Receptionist')
+
                             <div class="flex space-x-2">
                                 <a href="{{ route('bookings.edit', $booking->id) }}" class="text-indigo-600 hover:text-indigo-900" title="Edit">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -68,6 +80,8 @@
                                     </button>
                                 </form>
                             </div>
+
+@endhasanyrole
                         </td>
                     </tr>
                     @endforeach
