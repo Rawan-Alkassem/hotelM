@@ -13,8 +13,16 @@ class Service extends Model
     protected $fillable = ['name', 'description', 'image']; 
 
   
+
+
     public function roomTypes()
     {
         return $this->belongsToMany(RoomType::class, 'room_type_services');
     }
+
+     public function rooms()
+    {
+        return $this->belongsToMany(Room::class);
+    }
+
 }

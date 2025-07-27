@@ -5,6 +5,10 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReceptionistController;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\Admin\EmployeeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,42 +18,58 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// ملف web.php
+require __DIR__.'/auth.php';
 
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
+
+// ✏️ المسارات العامة للمستخدم المسجل الدخول
 Route::middleware('auth')->group(function () {
-    // ✏️ المسارات العامة للمستخدم المسجل الدخول
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-// Route::middleware(['auth', 'role:Admin'])->group(function () {
-Route::middleware('auth')->group(function () {
-    //  فقط Admin أو Receptionist المسجلين دخول يمكنهم الوصول إلى ما يلي:
-
-    // إدارة الغرف
+// 🛏️ إدارة الغرف، أنواع الغرف، والخدمات (Admin فقط)
+Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::resource('rooms', RoomController::class);
 
-    // عرض إضافي لأنواع الغرف (ممكن يكون للعرض فقط أو مخصص للجدول)
     Route::get('room-types/view', [RoomTypeController::class, 'view'])->name('room-types.view');
-
-    // إدارة أنواع الغرف
     Route::resource('room-types', RoomTypeController::class);
 
-    // إدارة الخدمات
     Route::resource('services', ServiceController::class);
+
+    // إدارة الموظفين
+    Route::get('/employeesmanagement/index', [EmployeeController::class, 'index'])->name('employeesmanagement.index');
+    Route::get('/employeesmanagement/create', [EmployeeController::class, 'create'])->name('employeesmanagement.create');
+    Route::post('/employeesmanagement/index', [EmployeeController::class, 'store'])->name('employeesmanagement.store');
+    Route::get('/employeesmanagement/{user}/edit-role', [EmployeeController::class, 'editRole'])->name('employeesmanagement.edit-role');
+    Route::put('/employeesmanagement/{user}/update-role', [EmployeeController::class, 'updateRole'])->name('employeesmanagement.update-role');
+    Route::delete('/employeesmanagement/{user}', [EmployeeController::class, 'destroy'])->name('employeesmanagement.destroy');
 });
 
+// 👨‍💼 لوحة استقبال للموظف (Receptionist)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/receptionist', [ReceptionistController::class, 'index'])->name('receptionist.dashboard');
 
+    // تقارير الحجز
+    Route::get('/report', [CalendarController::class, 'report'])->name('booking.report');
 
-require __DIR__.'/auth.php';
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
+    // عرض الحجوزات لجميع المستخدمين المسجلين
+    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
 
+    // إنشاء وتعديل وحذف الحجوزات (Admin وReceptionist فقط)
+    Route::middleware(['role:Admin|Receptionist'])->group(function () {
+        Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
+        Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+        Route::get('/bookings/{booking}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
+        Route::put('/bookings/{booking}', [BookingController::class, 'update'])->name('bookings.update');
+        Route::delete('/bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+    });
 
-// route::middleware(['auth'])->group(function(){
-
-//     Route::resource('rooms',RoomController::class);
-// });
+    // التقويم
+    Route::get('/calendar/{year?}/{month?}', [CalendarController::class, 'show'])
+        ->where(['year' => '\d{4}', 'month' => '\d{1,2}'])
+        ->name('calendar');
+});

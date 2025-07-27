@@ -1,32 +1,25 @@
 <?php
 
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+class RoomTypeService extends Model {
 
-class Room extends Model
-{
-    use HasFactory;
-
-    protected $table = 'Rooms';
+    protected $table = 'RoomTypeServices';
 
     protected $fillable = [
-        'room_number',
         'room_type_id',
-        'status',
+        'service_id',
     ];
 
-
     public function roomType() {
-//   return $this->belongsTo(RoomType::class);
         return $this->belongsTo(RoomType::class, 'room_type_id');
     }
 
-    public function bookings() {
-        return $this->hasMany(Booking::class, 'room_id');
+    public function service() {
+        return $this->belongsTo(Service::class, 'service_id');
     }
 }
-
-
