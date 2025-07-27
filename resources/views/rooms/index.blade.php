@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="title">Rooms List</x-slot>
 
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight text-left mb-6">
+    <h2 class="font-semibold text-xl text-white leading-tight text-left mb-6">
         Rooms List
     </h2>
 
@@ -15,7 +15,7 @@
             @endif
 
             <div class="mb-4 flex justify-between">
-                <a href="{{ route('rooms.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-red hover:bg-blue-700">
+                <a href="{{ route('rooms.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-blue-700">
                     + Add New Room
                 </a>
             </div>
@@ -52,7 +52,9 @@
                                             {{ ucfirst($status) }}
                                         </span>
                                 </td>
-                                <td class="px-4 py-2">{{ $room->created_at->format('Y-m-d') }}</td>
+                                <td class="px-4 py-2">
+    {{ $room->created_at ? $room->created_at->format('Y-m-d') : 'N/A' }}
+</td>
                                 <td class="px-4 py-2 space-x-2">
                                     <a href="{{ route('rooms.show', $room->id) }}" class="text-blue-600 hover:underline text-sm">View</a>
                                     <a href="{{ route('rooms.edit', $room->id) }}" class="text-yellow-600 hover:underline text-sm ms-3">Edit</a>
@@ -73,7 +75,7 @@
             </div>
 
             <div class="mt-6 text-left">
-                <a href="{{ route('dashboard') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-sm text-black hover:bg-gray-700">
+                <a href="{{ route('dashboard') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-gray-700">
                     ← Back
                 </a>
             </div>

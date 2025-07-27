@@ -67,7 +67,7 @@ class RoomTypeController extends Controller
         $roomType = RoomType::findOrFail($id);
         $roomType->update($request->validated());
 
-        return redirect()->route('room-types.index')->with('success', 'تم تعديل نوع الغرفة بنجاح');
+        return redirect()->route('room-types.view')->with('success', 'تم تعديل نوع الغرفة بنجاح');
     }
 
 
@@ -84,7 +84,7 @@ class RoomTypeController extends Controller
         $roomType = RoomType::findOrFail($id);
         $roomType->delete();
 
-        return redirect()->route('room-types.index')->with('success', 'تم حذف نوع الغرفة بنجاح');
+        return redirect()->route('room-types.view')->with('success', 'تم حذف نوع الغرفة بنجاح');
     }
 
 

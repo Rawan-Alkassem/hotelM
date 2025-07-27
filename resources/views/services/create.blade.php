@@ -1,11 +1,11 @@
-<x-admin-layout>
+<x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-red-500 leading-tight text-right">
             ➕ Add New Service
         </h2>
     </x-slot>
 
-    <div class="py-8 text-right">
+    <div class="py-8 ">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-gray-800 shadow-sm sm:rounded-lg p-6 text-white">
 
@@ -89,4 +89,4 @@
             </div>
         </div>
     </div>
-</x-admin-layout>
+</x-app-layout>

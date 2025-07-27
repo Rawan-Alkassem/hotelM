@@ -1,4 +1,4 @@
-<x-admin-layout>
+<x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-red-500 leading-tight">
             Room Types
@@ -30,4 +30,4 @@
 
             
     </div>
-</x-admin-layout>
+</x-app-layout>

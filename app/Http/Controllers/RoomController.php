@@ -15,6 +15,7 @@ class RoomController extends Controller
      */
     public function index()
     {
+       
         $rooms = Room::with('roomType')->get();
         return view('rooms.index', compact('rooms'));
     }
@@ -24,8 +25,7 @@ class RoomController extends Controller
      */
     public function create()
     {
-         $services = \App\Models\Service::all();
-    return view('room-types.create', compact('services'));
+       
         $roomTypes = RoomType::all();
         return  view('rooms.create', compact('roomTypes'));
     }

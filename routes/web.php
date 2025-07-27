@@ -14,31 +14,33 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// ملف web.php
+
 Route::middleware('auth')->group(function () {
+    // ✏️ المسارات العامة للمستخدم المسجل الدخول
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    //ادارة الغرفة
-    Route::resource('rooms',RoomController::class);
-
-     Route::get('room-types/view', [RoomTypeController::class, 'view'])->name('room-types.view');
-
-    //ادراة انواع الغرف
-    Route::resource('room-types',RoomTypeController::class);
-   
-    //الخدمات
-    Route::resource('services', ServiceController::class);
-
-
-//     Route::middleware(['auth', 'role:Admin|Receptionist'])->group(function () {
-//     Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
-//     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-//     Route::get('/bookings/{booking}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
-//     Route::put('/bookings/{booking}', [BookingController::class, 'update'])->name('bookings.update');
-//     Route::delete('/bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
-// });
-
 });
+
+
+// Route::middleware(['auth', 'role:Admin'])->group(function () {
+Route::middleware('auth')->group(function () {
+    //  فقط Admin أو Receptionist المسجلين دخول يمكنهم الوصول إلى ما يلي:
+
+    // إدارة الغرف
+    Route::resource('rooms', RoomController::class);
+
+    // عرض إضافي لأنواع الغرف (ممكن يكون للعرض فقط أو مخصص للجدول)
+    Route::get('room-types/view', [RoomTypeController::class, 'view'])->name('room-types.view');
+
+    // إدارة أنواع الغرف
+    Route::resource('room-types', RoomTypeController::class);
+
+    // إدارة الخدمات
+    Route::resource('services', ServiceController::class);
+});
+
 
 
 require __DIR__.'/auth.php';
