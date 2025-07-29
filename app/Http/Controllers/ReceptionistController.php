@@ -3,8 +3,10 @@
 
 
 namespace App\Http\Controllers;
+use Spatie\Permission\Contracts\Role;
 
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Traits;
 class ReceptionistController extends Controller
 {
      public function index()

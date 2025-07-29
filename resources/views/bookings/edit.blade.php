@@ -1,4 +1,5 @@
 <x-app-layout>
+
 <div class="container mx-auto px-4 py-8">
     <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Booking #{{ $booking->id }}</h1>
 
@@ -80,25 +81,44 @@
                 </div>
 
                 <div>
-                    <label for="check_in_date" class="block text-sm font-medium text-gray-700">Check-in Date</label>
-                    <input type="date" id="check_in_date" name="check_in_date" 
-                           value="{{ \Carbon\Carbon::parse($booking->check_in_date)->format('Y-m-d') }}" 
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500
-                                  @error('check_in_date') border-red-500 @enderror">
-                    @error('check_in_date')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+
+//Hamzah
+              {{-- /*   //  <label for="check_in_date" class="block text-sm font-medium text-gray-700">Check-in Date</label>
+                  //  <input type="date" id="check_in_date" name="check_in_date" 
+                    //       value="{{ \Carbon\Carbon::parse($booking->check_in_date)->format('Y-m-d') }}" 
+                     //      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500
+                  //                @error('check_in_date') border-red-500 @enderror">
+                 //   @error('check_in_date')
+                  //      <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                 //   @enderror
+            //    </div>
+
+            //    <div>
+             //       <label for="check_out_date" class="block text-sm font-medium text-gray-700">Check-out Date</label>
+             //       <input type="date" id="check_out_date" name="check_out_date" 
+              //             value="{{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}" 
+              //             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500
+              //                    @error('check_out_date') border-red-500 @enderror">
+             //       @error('check_out_date')
+              //          <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            //        @enderror*/
+                    
+                    --}}
+                    
+                    <label for="check_in_date" class="block text-sm font-medium text-gray-700">تاريخ الدخول</label>
+                    {{-- <input type="date" id="check_in_date" name="check_in_date" value="{{ $booking->check_in_date->format('Y-m-d') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"> --}}
+                <input type="date" id="check_in_date" name="check_in_date"
+       value="{{ \Carbon\Carbon::parse($booking->check_in_date)->format('Y-m-d') }}"
+       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                 </div>
 
                 <div>
-                    <label for="check_out_date" class="block text-sm font-medium text-gray-700">Check-out Date</label>
-                    <input type="date" id="check_out_date" name="check_out_date" 
-                           value="{{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}" 
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500
-                                  @error('check_out_date') border-red-500 @enderror">
-                    @error('check_out_date')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                    <label for="check_out_date" class="block text-sm font-medium text-gray-700">تاريخ الخروج</label>
+                    {{-- <input type="date" id="check_out_date" name="check_out_date" value="{{ $booking->check_out_date->format('Y-m-d') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"> --}}
+                <input type="date" id="check_out_date" name="check_out_date"
+       value="{{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}"
+       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+
                 </div>
             </div>
 
@@ -113,6 +133,7 @@
         </form>
     </div>
 </div>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -155,3 +176,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 </x-app-layout>
+
