@@ -2,6 +2,41 @@
 <div class="container mx-auto px-4 py-8">
     <h1 class="text-2xl font-bold text-gray-800 mb-6">Create New Booking</h1>
 
+
+    @if ($errors->any())
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
+            <p class="font-bold">error!</p>
+            <ul class="list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+
+    <!-- Display Middleware Error Messages -->
+@if (session('error'))
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
+        <p class="font-bold">Error!</p>
+        <p>{{ session('error') }}</p>
+        @if (session('overlapping'))
+            <p class="mt-2 font-semibold">Overlapping Bookings:</p>
+            <ul class="list-disc list-inside">
+                @foreach (session('overlapping') as $booking)
+                    <li>
+                        Booking #: {{ $booking['id'] }} | 
+                        From: {{ $booking['check_in_date'] }} | 
+                        To: {{ $booking['check_out_date'] }} | 
+                        Status: {{ $booking['status'] }}
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+    </div>
+@endif
+
+
     <div class="bg-white shadow-md rounded-lg p-6">
         <form action="{{ route('bookings.store') }}" method="POST">
             @csrf
@@ -41,11 +76,17 @@
                 <div>
                     <label for="check_in_date" class="block text-sm font-medium text-gray-700">Check-in Date</label>
                     <input type="date" id="check_in_date" name="check_in_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                 @error('check_in_date')
+                  <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+    @enderror
                 </div>
 
                 <div>
                     <label for="check_out_date" class="block text-sm font-medium text-gray-700">Check-out Date</label>
                     <input type="date" id="check_out_date" name="check_out_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                @error('check_out_date')
+        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+    @enderror
                 </div>
             </div>
 

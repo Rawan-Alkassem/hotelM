@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
       \Database\Seeders\Hamza\ServiceSeeder::class,
                \Database\Seeders\Hamza\RoomTypeServiceSeeder::class,
  \Database\Seeders\Hamza\RoomSeeder::class,
-  \Database\Seeders\Hamza\Booking::class,
+  \Database\Seeders\Hamza\BookingSeeder::class,
             ]);
     }
 }
