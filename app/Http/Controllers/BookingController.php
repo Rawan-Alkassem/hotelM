@@ -6,12 +6,19 @@ use App\Models\Booking;
 use App\Models\Room;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use App\Http\Middleware\CheckBookingDates;
 
 class BookingController extends Controller
 {
+public function __construct()
+{
+    // $this->middleware(CheckBookingDates::class)->only('store');
+}
+
     public function index()
     {
-        $bookings = Booking::with('user')->paginate(20);
+        $bookings = Booking::with('user')->paginate(10);
         return view('bookings.index', compact('bookings'));
     }
 
@@ -22,26 +29,32 @@ class BookingController extends Controller
         return view('bookings.create', compact('users', 'rooms'));
     }
 
-        public function store(Request $request)
-        {
-            $validated = $request->validate([
-                'user_id' => 'required|exists:users,id',
-                'room_id' => 'required|exists:rooms,id',
-                'check_in_date' => 'required|date',
-                'check_out_date' => 'required|date|after:check_in_date',
-            ]);
+      public function store(Request $request)
+{
+    $validated = $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'room_id' => 'required|exists:rooms,id',
+   'check_in_date' => 'required|date|after_or_equal:today',
+    'check_out_date' => 'required|date|after:check_in_date',
+       ], [
+        'check_in_date.after_or_equal' => 'Check-in date must be today or a future date',
+        'check_out_date.after' => 'Check-out date must be after check-in date',
+        'room_id.required' => 'Please select a room',
+        'room_id.exists' => 'The selected room does not exist',
+    ]);
 
-            $days = Carbon::parse($request->check_in_date)
-                ->diffInDays(Carbon::parse($request->check_out_date));
 
-            $validated['total_price'] = $days * 180; // 180 هو سعر الليلة
-            $validated['status'] = 'pending';
+    $days = Carbon::parse($request->check_in_date)
+        ->diffInDays(Carbon::parse($request->check_out_date));
 
-            Booking::create($validated);
+    $validated['total_price'] = $days * 180;
+    $validated['status'] = 'pending';
 
-            return redirect()->route('bookings.index')
-                ->with('success', 'تم إنشاء الحجز بنجاح');
-        }
+    Booking::create($validated);
+
+    return redirect()->route('bookings.index')
+        ->with('success', 'تم إنشاء الحجز بنجاح');
+}
 
     public function edit(Booking $booking)
     {
@@ -77,4 +90,14 @@ class BookingController extends Controller
         return redirect()->route('bookings.index')
             ->with('success', 'تم حذف الحجز بنجاح');
     }
+    public function finish(Booking $booking)
+{
+    $booking->update(['status' => 'finished']);
+
+    return redirect()->route('bookings.index')
+        ->with('success', 'Booking marked as finished successfully');
+}
+
+
+
 }

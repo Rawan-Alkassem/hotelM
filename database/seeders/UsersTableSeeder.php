@@ -15,6 +15,8 @@ class UsersTableSeeder extends Seeder
             'full_name' => 'Admin1',
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
+            'phone'=> '0935313431',
+
         ]);
         $admin->assignRole('Admin');
 //
@@ -22,6 +24,7 @@ class UsersTableSeeder extends Seeder
             'full_name' => 'Hotel Manager1',
             'email' => 'hotelmanager@example.com',
             'password' => Hash::make('password'),
+        'phone'=> '0935313432',
         ]);
         $hotelManager->assignRole('Hotel Manager');
 //
@@ -29,6 +32,7 @@ class UsersTableSeeder extends Seeder
             'full_name' => 'Receptionist1',
             'email' => 'Recep@example.com',
             'password' => Hash::make('password'),
+            'phone'=> '0935313433',
         ]);
         $Receptionist->assignRole('Receptionist');
 
@@ -37,6 +41,7 @@ class UsersTableSeeder extends Seeder
             'full_name' => 'Customer1',
             'email' => 'Customer@example.com',
             'password' => Hash::make('password'),
+            'phone'=> '0935313434',
         ]);
         $Customer->assignRole('Customer');
 

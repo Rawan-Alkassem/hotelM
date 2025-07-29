@@ -9,6 +9,12 @@ class Booking extends Model {
 
     protected $table = 'Bookings';
 
+
+// OR using $casts (preferred in newer Laravel versions):
+protected $casts = [
+    'check_in_date' => 'date',
+    'check_out_date' => 'date',
+];
     protected $fillable = [
         'user_id',
         'room_id',
@@ -22,11 +28,14 @@ protected $dates = [
     'check_out_date',
     'created_at',
     'updated_at'
-];  
+];
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
-
+    public function receptionist()
+    {
+        return $this->belongsTo(User::class, 'receptionist_id');
+    }
     public function room() {
         return $this->belongsTo(Room::class, 'room_id');
     }
