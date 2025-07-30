@@ -115,7 +115,7 @@
                                         {{ $room->roomType->name }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-gray-500">
-                                        ${{ number_format($room->roomType->cost_per_night, 2) }}
+                                        ${{ number_format($room->roomType->price, 2) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
@@ -131,8 +131,8 @@
                                             <input type="hidden" name="check_in_date" value="{{ $date->format('Y-m-d') }}">
                                             <input type="hidden" name="check_out_date" value="{{ $checkOutDate->format('Y-m-d') }}">
                                             <input type="hidden" name="days" value="{{ $days }}">
-                                            <input type="hidden" name="price_per_night" value="{{ $room->roomType->cost_per_night }}">
-                                            <input type="hidden" name="total_price" value="{{ $room->roomType->cost_per_night * $days }}">
+                                            <input type="hidden" name="price_per_night" value="{{ $room->roomType->price }}">
+                                            <input type="hidden" name="total_price" value="{{ $room->roomType->price * $days }}">
 
                                             <button type="submit" class="text-blue-600 hover:text-blue-900 font-medium">
                                                 Book Now

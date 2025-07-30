@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // $this->call(RoleSeeder::class);//false merge hamza
         // User::factory(10)->create();
 
         // User::factory()->create([
@@ -21,7 +22,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
       $this->call([
-
+RoleSeeder::class,//edit merge hamza to be true like this
  RolesAndPermissionsSeeder::class,
      UsersTableSeeder::class,
         \Database\Seeders\Hamza\RoomTypeSeeder::class,
