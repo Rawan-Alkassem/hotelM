@@ -24,9 +24,9 @@
                 <ul class="list-disc list-inside">
                     @foreach (session('overlapping') as $booking)
                         <li>
-                            Booking #: {{ $booking['id'] }} | 
-                            From: {{ $booking['check_in_date'] }} | 
-                            To: {{ $booking['check_out_date'] }} | 
+                            Booking #: {{ $booking['id'] }} |
+                            From: {{ $booking['check_in_date'] }} |
+                            To: {{ $booking['check_out_date'] }} |
                             Status: {{ $booking['status'] }}
                         </li>
                     @endforeach
@@ -60,7 +60,7 @@
                     <select id="room_id" name="room_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                         <option value="">Select a room</option>
                         @foreach($rooms as $room)
-                            <option value="{{ $room->id }}" 
+                            <option value="{{ $room->id }}"
                                 data-type="{{ $room->room_type }}"
                                 {{ $booking->room_id == $room->id ? 'selected' : '' }}>
                                 {{ $room->room_number }} ({{ $room->roomType->name }})
@@ -81,8 +81,8 @@
 
                 <div>
                     <label for="check_in_date" class="block text-sm font-medium text-gray-700">Check-in Date</label>
-                    <input type="date" id="check_in_date" name="check_in_date" 
-                           value="{{ \Carbon\Carbon::parse($booking->check_in_date)->format('Y-m-d') }}" 
+                    <input type="date" id="check_in_date" name="check_in_date"
+                           value="{{ \Carbon\Carbon::parse($booking->check_in_date)->format('Y-m-d') }}"
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500
                                   @error('check_in_date') border-red-500 @enderror">
                     @error('check_in_date')
@@ -92,8 +92,8 @@
 
                 <div>
                     <label for="check_out_date" class="block text-sm font-medium text-gray-700">Check-out Date</label>
-                    <input type="date" id="check_out_date" name="check_out_date" 
-                           value="{{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}" 
+                    <input type="date" id="check_out_date" name="check_out_date"
+                           value="{{ \Carbon\Carbon::parse($booking->check_out_date)->format('Y-m-d') }}"
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500
                                   @error('check_out_date') border-red-500 @enderror">
                     @error('check_out_date')
@@ -123,16 +123,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize room filtering
     filterRoomsByType();
-    
+
     roomTypeSelect.addEventListener('change', filterRoomsByType);
 
     function filterRoomsByType() {
         const selectedType = roomTypeSelect.value;
-        
+
         // Clear current options except the first one
         roomSelect.innerHTML = '';
         roomSelect.appendChild(roomOptions[0]);
-        
+
         if (selectedType) {
             // Filter and show only rooms of selected type
             roomOptions.forEach(option => {
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 roomSelect.appendChild(option);
             });
         }
-        
+
         // Re-select the current room if available
         if (currentRoomId) {
             roomSelect.value = currentRoomId;
