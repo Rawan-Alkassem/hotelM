@@ -7,6 +7,7 @@ use App\Http\Controllers\API\BookingController;
 use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\RoomController;
 use App\Http\Controllers\API\ServicePublicController;
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -30,3 +31,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel']);
     Route::post('/bookings/{id}/review', [BookingController::class, 'addReview']);
 });
+
+// كل الخدمات
+Route::get('services', [ServicePublicController::class, 'index']);
+
+// عرض خدمة الي بحددا الزبون
+Route::get('services/{id}', [ServicePublicController::class, 'show']);

@@ -24,23 +24,27 @@ class BookingController extends Controller
 
         public function store(Request $request)
         {
+            dd(auth()->id());
+
             $validated = $request->validate([
-                'user_id' => 'required|exists:users,id',
+                //'user_id' => 'required|exists:users,id',
                 'room_id' => 'required|exists:rooms,id',
                 'check_in_date' => 'required|date',
                 'check_out_date' => 'required|date|after:check_in_date',
             ]);
 
-            $days = Carbon::parse($request->check_in_date)
-                ->diffInDays(Carbon::parse($request->check_out_date));
+                $days = Carbon::parse($request->check_in_date)
+                    ->diffInDays(Carbon::parse($request->check_out_date));
+                $validated['total_price'] = $days * 180; 
+                $validated['status'] = 'pending';
+                $validated['user_id'] = auth()->id();
 
-            $validated['total_price'] = $days * 180; // 180 هو سعر الليلة
-            $validated['status'] = 'pending';
+                $booking = Booking::create($validated);
 
-            Booking::create($validated);
-
-            return redirect()->route('bookings.index')
-                ->with('success', 'تم إنشاء الحجز بنجاح');
+                return response()->json([
+                'message' => 'تم إنشاء الحجز بنجاح',
+                'booking' => $booking
+    ]);
         }
 
     public function edit(Booking $booking)

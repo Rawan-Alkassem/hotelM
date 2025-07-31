@@ -12,7 +12,7 @@ class RoomTypeServiceSeeder extends Seeder
     public function run()
     {
         // حذف البيانات القديمة أولاً لتجنب التكرار
-        DB::table('room_type_services')->truncate();
+        DB::table('room_type_service')->truncate();
 
         // الحصول على جميع أنواع الغرف
         $roomTypes = [
@@ -30,7 +30,7 @@ class RoomTypeServiceSeeder extends Seeder
                 $serviceIds = Service::whereIn('name', $services)->pluck('id')->toArray();
 
                 foreach ($serviceIds as $serviceId) {
-                    DB::table('room_type_services')->insert([
+                    DB::table('room_type_service')->insert([
                         'room_type_id' => $roomType->id,
                         'service_id' => $serviceId,
                         'created_at' => now(),

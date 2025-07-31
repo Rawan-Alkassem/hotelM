@@ -35,7 +35,7 @@ class BookingSeeder extends Seeder
             $totalPrice = $days * 180;
             
             // حالات الحجز العشوائية
-            $statuses = ['pending', 'confirmed', 'cancelled', 'finished'];
+$statuses = ['pending', 'confirmed', 'cancelled', 'completed'];
             $randomStatus = $statuses[array_rand($statuses)];
             
             // إنشاء الحجز

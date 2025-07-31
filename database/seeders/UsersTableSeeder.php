@@ -11,34 +11,44 @@ class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        $admin = User::create([
-            'full_name' => 'Admin1',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
-        ]);
+        // ✅ تعديل هنا: استخدام firstOrCreate لتفادي التكرار
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'full_name' => 'Admin1',
+                'password' => Hash::make('password'),
+            ]
+        );
         $admin->assignRole('Admin');
-//
-        $hotelManager = User::create([
-            'full_name' => 'Hotel Manager1',
-            'email' => 'hotelmanager@example.com',
-            'password' => Hash::make('password'),
-        ]);
+
+        // ✅ تعديل هنا
+        $hotelManager = User::firstOrCreate(
+            ['email' => 'hotelmanager@example.com'],
+            [
+                'full_name' => 'Hotel Manager1',
+                'password' => Hash::make('password'),
+            ]
+        );
         $hotelManager->assignRole('Hotel Manager');
-//
-        $Receptionist = User::create([
-            'full_name' => 'Receptionist1',
-            'email' => 'Recep@example.com',
-            'password' => Hash::make('password'),
-        ]);
-        $Receptionist->assignRole('Receptionist');
 
-        //
-        $Customer = User::create([
-            'full_name' => 'Customer1',
-            'email' => 'Customer@example.com',
-            'password' => Hash::make('password'),
-        ]);
-        $Customer->assignRole('Customer');
+        // ✅ تعديل هنا
+        $receptionist = User::firstOrCreate(
+            ['email' => 'Recep@example.com'],
+            [
+                'full_name' => 'Receptionist1',
+                'password' => Hash::make('password'),
+            ]
+        );
+        $receptionist->assignRole('Receptionist');
 
+        // ✅ تعديل هنا
+        $customer = User::firstOrCreate(
+            ['email' => 'Customer@example.com'],
+            [
+                'full_name' => 'Customer1',
+                'password' => Hash::make('password'),
+            ]
+        );
+        $customer->assignRole('Customer');
     }
 }

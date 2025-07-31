@@ -27,6 +27,7 @@ class RoomSeeder extends Seeder
             Room::create([
                 'room_number' => $i . 'SR',
                 'room_type_id' => 1,
+                'price'=>250,
                 'status' => 'available',
                 'created_at' => now(),
                 'updated_at' => now()
@@ -38,6 +39,7 @@ class RoomSeeder extends Seeder
             Room::create([
                 'room_number' => $i . 'DR',
                 'room_type_id' => 2,
+                'price'=>350,
                 'status' => 'available',
                 'created_at' => now(),
                 'updated_at' => now()
@@ -49,6 +51,7 @@ class RoomSeeder extends Seeder
             Room::create([
                 'room_number' => $i . 'VIPSR',
                 'room_type_id' => 3,
+                'price'=>450,
                 'status' => 'available',
                 'created_at' => now(),
                 'updated_at' => now()
@@ -60,6 +63,7 @@ class RoomSeeder extends Seeder
             Room::create([
                 'room_number' => $i . 'VIPDR',
                 'room_type_id' => 4,
+                'price'=>550,
                 'status' => 'available',
                 'created_at' => now(),
                 'updated_at' => now()

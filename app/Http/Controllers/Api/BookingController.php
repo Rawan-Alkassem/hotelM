@@ -13,7 +13,7 @@ class BookingController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $bookings = Booking::with(['room', 'room.type', 'review'])
+        $bookings = Booking::with(['room', 'room.type', 'reviews'])
             ->where('user_id', $user->id)
             ->get();
 

@@ -16,7 +16,7 @@ class RoomType extends Model
 
     public function services()
     {
-        return $this->belongsToMany(Service::class, 'room_type_services');
+        return $this->belongsToMany(Service::class, 'room_type_service');
     }
 }
 

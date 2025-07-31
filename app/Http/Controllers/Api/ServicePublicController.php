@@ -18,3 +18,5 @@ class ServicePublicController extends Controller
         return response()->json($service, 200); 
     }
 }
+
+

@@ -9,14 +9,14 @@ class Booking extends Model {
 
     protected $table = 'bookings';
 
-     protected $fillable = [
-        'user_id', 
-        'room_id', 
-        'check_in_date', 
-        'check_out_date', 
-        'status', 
-        'total_price'
-    ];
+   protected $fillable = [
+    'user_id',
+    'room_id',
+    'check_in_date',
+    'check_out_date',
+    'total_price',
+    'status',
+];
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
