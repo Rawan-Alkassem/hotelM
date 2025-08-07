@@ -1,6 +1,6 @@
 # 🏨 Hotel Management System (Laravel 12)
 
-A complete role-based hotel management system built with Laravel 12, featuring room and booking management, employee roles, hotel analytics, and more. Designed for Admins, Receptionists, and Hotel Managers.
+A complete role-based hotel management system built with Laravel 12, featuring room and booking management, employee roles, hotel analytics, email notification and more. Designed for Admins, Receptionists, and Hotel Managers. 
 
 ##  Admin Features
 
@@ -13,7 +13,7 @@ A complete role-based hotel management system built with Laravel 12, featuring r
 - 📚 Booking Logs & Confirmation Flow
 - 📅 Calendar & Room Availability
 - 🔍 Booking Filtering (by status, type, etc.)
-
+- 📧 Email Notification when creating a booking by the admin 
 ##  User Roles
 
 - **Admin**: Full access to all features
@@ -29,6 +29,7 @@ A complete role-based hotel management system built with Laravel 12, featuring r
 - Spatie Laravel Permission
 - Vite for asset bundling
 - Composer + NPM
+- Smtp & Password App (for email notification) 
 
 ##  Installation Steps
 
