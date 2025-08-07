@@ -86,7 +86,7 @@ class RoomController extends Controller
         return redirect()->route('rooms.index')->with('success', 'Room deleted successfully.');
     }
 
-  public function checkRoomAvailability(Request $request)
+public function checkRoomAvailability(Request $request)
 {
       if (!$request->has('date')) {
         return view('room-availability', [
@@ -176,7 +176,7 @@ public function showConfirmation(Request $request)
         'check_in_date' => 'required|date',
         'check_out_date' => 'required|date',
         'days' => 'required|integer|min:1',
-        'price_per_night' => 'required|numeric',
+        'price' => 'required|numeric',
         'total_price' => 'required|numeric'
     ]);
 
@@ -185,29 +185,5 @@ public function showConfirmation(Request $request)
     ]);
 }
 
-public function saveForLater(Request $request)
-{
-    $validated = $request->validate([
-        'room_id' => 'required|exists:rooms,id',
-        'check_in_date' => 'required|date',
-        'check_out_date' => 'required|date|after:check_in_date',
-        'days' => 'required|integer|min:1',
-        'total_price' => 'required|numeric'
-    ]);
 
-    // يمكنك استخدام نفس نموذج Booking أو إنشاء نموذج جديد للحجوزات المحفوظة
-    // $Booking = new BOOKING(); // إذا كنت تريد فصلها في جدول مختلف
-    // أو استخدام نفس نموذج Booking مع تغيير الحالة
-    $booking = new Booking();
-    $booking->user_id = auth()->id();
-    $booking->room_id = $validated['room_id'];
-    $booking->check_in_date = $validated['check_in_date'];
-    $booking->check_out_date = $validated['check_out_date'];
-    $booking->total_price = $validated['total_price'];
-    $booking->status = 'pending'; // أضف هذه الحالة إلى الحالات المسموحة
-    $booking->save();
-
-    return redirect()->route('bookings.index')
-           ->with('success', 'تم حفظ الحجز لاحقاً بنجاح');
-}
 }

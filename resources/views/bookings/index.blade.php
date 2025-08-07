@@ -17,7 +17,7 @@
         </button>
     </form>
 
-    <!-- Search Button -->
+        <!-- Search Button -->
     <form action="{{ route('rooms.availability') }}" method="GET" class="flex">
         <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md flex items-center transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -52,8 +52,8 @@
                             <th class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
                             <th class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">Room</th>
                             <th class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">Check-in Date</th>
-                            <th class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">Check-out Date</th>
+                            <th class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
+                            <th class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">End Date</th>
                             <th class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">Total Price</th>
                             <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Receptionist</th>
                             <th class="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -128,6 +128,13 @@
                             </div>
                         </div>
                     </div>
+                    <a href="{{ route('bookings.info', $booking->id) }}"
+           class="text-purple-600 hover:text-purple-800"
+           title="Booking Information">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </a>
                 </td>
             </tr>
             @endforeach
@@ -145,4 +152,4 @@
         </div>
     </div>
 </x-app-layout>
- 
+

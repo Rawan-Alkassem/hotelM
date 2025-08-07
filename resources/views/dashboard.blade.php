@@ -51,6 +51,10 @@ employees management                        </a>   </div>
                            Bookings Management
                         </a>   </div>
                         </div>
+                             <div style="color: blue " >  <a href="{{ route('hotelManager.index') }}" >
+                           hotel management
+                        </a>   </div>
+                        </div>
 
             </div>
         </div>

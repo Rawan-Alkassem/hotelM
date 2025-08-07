@@ -131,7 +131,7 @@
                                             <input type="hidden" name="check_in_date" value="{{ $date->format('Y-m-d') }}">
                                             <input type="hidden" name="check_out_date" value="{{ $checkOutDate->format('Y-m-d') }}">
                                             <input type="hidden" name="days" value="{{ $days }}">
-                                            <input type="hidden" name="price_per_night" value="{{ $room->roomType->price }}">
+                                            <input type="hidden" name="price" value="{{ $room->roomType->price }}">
                                             <input type="hidden" name="total_price" value="{{ $room->roomType->price * $days }}">
 
                                             <button type="submit" class="text-blue-600 hover:text-blue-900 font-medium">

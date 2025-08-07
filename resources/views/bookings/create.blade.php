@@ -25,9 +25,9 @@
             <ul class="list-disc list-inside">
                 @foreach (session('overlapping') as $booking)
                     <li>
-                        Booking #: {{ $booking['id'] }} | 
-                        From: {{ $booking['check_in_date'] }} | 
-                        To: {{ $booking['check_out_date'] }} | 
+                        Booking #: {{ $booking['id'] }} |
+                        From: {{ $booking['check_in_date'] }} |
+                        To: {{ $booking['check_out_date'] }} |
                         Status: {{ $booking['status'] }}
                     </li>
                 @endforeach
@@ -41,8 +41,28 @@
         <form action="{{ route('bookings.store') }}" method="POST">
             @csrf
 
+            <div>
+        <label for="customer_search" class="block text-sm font-medium text-gray-700">Customer</label>
+        <div class="mt-1 relative">
+            <input type="text" id="customer_search" name="customer_search"
+                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                   placeholder="Search by full name">
+            <div id="customer_results" class="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-md hidden"></div>
+        </div>
+        <select id="user_id" name="user_id" class="mt-2 hidden block w-full rounded-md border-gray-300 shadow-sm">
+            <option value="">Select a customer</option>
+            @foreach($customers as $customer)
+                <option value="{{ $customer->id }}" data-fullname="{{ $customer->full_name }}">
+                    {{ $customer->full_name }} ({{ $customer->email }})
+                </option>
+            @endforeach
+        </select>
+        @error('user_id')
+            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+        @enderror
+    </div>
             <!-- Hidden field for current user -->
-            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+            <input type="hidden" name="receptionist_id" value="{{ Auth::user()->id }}">
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -61,7 +81,7 @@
                     <select id="room_id" name="room_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                         <option value="">Select a room</option>
                             @foreach($rooms as $room)
-    <option value="{{ $room->id }}" 
+    <option value="{{ $room->id }}"
         data-type="@php
             $lastTwo = substr($room->room_number, -2);
             $lastFive = substr($room->room_number, -5);
@@ -101,32 +121,50 @@
         </form>
     </div>
 </div>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const roomTypeSelect = document.getElementById('room_type');
-    const roomSelect = document.getElementById('room_id');
-    const roomOptions = Array.from(roomSelect.options);
+    const customerSearch = document.getElementById('customer_search');
+    const customerResults = document.getElementById('customer_results');
+    const userIdSelect = document.getElementById('user_id');
 
-    roomTypeSelect.addEventListener('change', function() {
-        const selectedType = this.value;
-        
-        // Clear current options except the first one
-        roomSelect.innerHTML = '';
-        roomSelect.appendChild(roomOptions[0]);
-        
-        if (selectedType) {
-            // Filter and show only rooms of selected type
-            roomOptions.forEach(option => {
-                if (option.dataset.type === selectedType) {
-                    roomSelect.appendChild(option);
+    customerSearch.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+
+        if (searchTerm.length < 2) {
+            customerResults.classList.add('hidden');
+            return;
+        }
+
+        const options = Array.from(userIdSelect.options);
+        const filtered = options.filter(option =>
+            option.textContent.toLowerCase().includes(searchTerm)
+        );
+
+        if (filtered.length > 0) {
+            customerResults.innerHTML = '';
+            filtered.forEach(option => {
+                if (option.value) {
+                    const div = document.createElement('div');
+                    div.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+                    div.textContent = option.textContent;
+                    div.onclick = () => {
+                        customerSearch.value = option.dataset.fullname;
+                        userIdSelect.value = option.value;
+                        customerResults.classList.add('hidden');
+                    };
+                    customerResults.appendChild(div);
                 }
             });
+            customerResults.classList.remove('hidden');
         } else {
-            // Show all rooms if no type selected
-            roomOptions.forEach(option => {
-                roomSelect.appendChild(option);
-            });
+            customerResults.classList.add('hidden');
+        }
+    });
+
+    // إخفاء النتائج عند النقر خارجها
+    document.addEventListener('click', function(e) {
+        if (!customerResults.contains(e.target) && e.target !== customerSearch) {
+            customerResults.classList.add('hidden');
         }
     });
 });

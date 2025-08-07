@@ -26,5 +26,16 @@ class RoomType extends Model
     {
         return $this->belongsToMany(Service::class, 'room_type_services');
     }
+    public function bookings()
+    {
+        return $this->hasManyThrough(
+            Booking::class,
+            Room::class,
+            'room_type_id', // Foreign key on rooms table
+            'room_id',      // Foreign key on bookings table
+            'id',           // Local key on room_types table
+            'id'            // Local key on rooms table
+        );
+    }
 }
 

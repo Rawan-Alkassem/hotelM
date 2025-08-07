@@ -10,6 +10,8 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\BookingController;
 
 use App\Http\Controllers\BookingSearchController;
+use App\Http\Controllers\HotelManagerController;
+
 
 use App\Http\Controllers\Admin\EmployeeController;
 
@@ -35,8 +37,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/rooms/availability', [RoomController::class, 'checkRoomAvailability'])
+     ->name('rooms.availability');
 // 🛏️ إدارة الغرف، أنواع الغرف، والخدمات (Admin فقط)
 Route::middleware(['auth', 'role:Admin'])->group(function () {
+
     Route::resource('rooms', RoomController::class);
 
     Route::get('room-types/view', [RoomTypeController::class, 'view'])->name('room-types.view');
@@ -54,7 +59,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
 });
 
 // 👨‍💼 لوحة استقبال للموظف (Receptionist)
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/receptionist', [ReceptionistController::class, 'index'])->name('receptionist.dashboard');
 
     // تقارير الحجز
@@ -63,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Route::resource('bookings', BookingController::class)
     // ->middleware('check.booking.dates', ['only' => ['store']]);
-    
+
   //  Route::resource('bookings', BookingController::class)
   //  ->except(['show'])
    // ->middleware('check.booking.dates', ['only' => ['store']]);
@@ -81,10 +86,24 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:Admin|Receptionist'])->group(function () {
         Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
         Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store')
-         ->middleware('check.booking.dates', ['only' => ['store']]);;
-        Route::get('/bookings/{booking}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
+         ->middleware('check.booking.dates');
+        Route::get('/bookings/{booking}/edit', [BookingController::class, 'edit'])->name('bookings.edit')
+        ->middleware('check.booking.dates');
         Route::put('/bookings/{booking}', [BookingController::class, 'update'])->name('bookings.update');
         Route::delete('/bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+  Route::get('/bookings/{booking}/info', [BookingController::class, 'info'])
+    ->name('bookings.info');
+Route::get('/bookings/{booking}/edit-log', [BookingController::class, 'editLog'])
+    ->name('bookings.editLog');
+
+Route::put('/bookings/{booking}/update-log', [BookingController::class, 'updateLog'])
+    ->name('bookings.updateLog');
+
+Route::post('/bookings/confirm', [RoomController::class, 'showConfirmation'])
+->name('bookings.confirm');
+Route::post('/bookings/confirmBooking', [BookingController::class, 'confirmBooking'])
+->name('booking.confirm')->middleware(['auth', 'check.booking.dates']);
+
     });
 
 
@@ -95,29 +114,24 @@ Route::middleware(['auth'])->group(function () {
     ->name('calendar');
 
 
-Route::get('/rooms/availability', [RoomController::class, 'checkRoomAvailability'])
-     ->name('rooms.availability');
-
-
-Route::post('/bookings/confirm', [RoomController::class, 'showConfirmation'])
-->name('bookings.confirm');
-Route::post('/bookings/save-for-later', [RoomController::class, 'saveForLater'])
-->name('bookings.saveForLater');
 
 
 
 
 Route::get('/bookings/filter', [BookingSearchController::class, 'index'])
 ->name('bookings.filter');
-// عل الحذف التلت رواتات
-// Route::post('/bookings/filter', [BookingSearchController::class, 'filterByStatus'])
-// ->name('bookings.filter');
-// Route::post('/bookings/filter-by-room', [BookingSearchController::class, 'filterByRoomType'])
-// ->name('bookings.filter.room');
-
-
-//      Route::get('/bookings/filter', [BookingSearchController::class, 'filterBookings'])
-// ->name('bookings.filter');
-
+Route::prefix('hotel-manager')->middleware('auth')->group(function () {
+    Route::get('/', [HotelManagerController::class, 'index'])->name('hotelManager.index');
+    Route::get('/yearly-occupancy', [HotelManagerController::class, 'yearlyOccupancyReport'])
+        ->name('hotelManager.yearlyOccupancy');
+    Route::get('/monthly-occupancy', [HotelManagerController::class, 'monthlyOccupancy'])
+        ->name('hotelManager.monthlyOccupancy');
+    Route::get('/occupancy/by-type', [HotelManagerController::class, 'yearlyOccupancyByType'])
+        ->name('hotelManager.occupancy.by-type');
 });
 
+
+// Route::prefix('hotel-manager')->middleware(['auth', 'verified', 'role:hotel_manager'])->group(function () {
+//    });
+});
+ 

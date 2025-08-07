@@ -23,7 +23,7 @@ class RoomSeeder extends Seeder
         Room::query()->delete();
 
         // إنشاء غرف Standard Single (النوع 1)
-        for ($i = 1; $i <10; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             Room::create([
                 'room_number' => $i . 'SR',
                 'room_type_id' => 1,
@@ -34,7 +34,7 @@ class RoomSeeder extends Seeder
         }
 
         // إنشاء غرف Standard Double (النوع 2)
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 1; $i <=  10; $i++) {
             Room::create([
                 'room_number' => $i . 'DR',
                 'room_type_id' => 2,
@@ -45,7 +45,7 @@ class RoomSeeder extends Seeder
         }
 
         // إنشاء غرف VIP Single (النوع 3)
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             Room::create([
                 'room_number' => $i . 'VIPSR',
                 'room_type_id' => 3,
@@ -56,7 +56,7 @@ class RoomSeeder extends Seeder
         }
 
         // إنشاء غرف VIP Double (النوع 4)
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             Room::create([
                 'room_number' => $i . 'VIPDR',
                 'room_type_id' => 4,
