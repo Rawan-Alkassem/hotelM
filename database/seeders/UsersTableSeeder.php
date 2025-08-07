@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Role;
 class UsersTableSeeder extends Seeder
 {
     public function run()
-    {
+   {
         $admin = User::create(attributes: [
             'full_name' => 'Admin1',
             'email' => 'admin@example.com',

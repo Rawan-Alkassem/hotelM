@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container mx-auto px-4 py-8">
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Bookings Management</h1>
+            <h1 class="text-2xl font-bold text-white">Bookings Management</h1>
       <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
     <!-- Filter Form -->
     <form action="{{ route('bookings.filter') }}" method="GET" class="flex flex-col sm:flex-row gap-3 items-start sm:items-center">

@@ -113,10 +113,16 @@ employees management                        </a>   </div>
                        class="block w-full text-center bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded transition mt-4">
                         Bookings Management
                     </a>
-@endhasanyrole                    <a href="{{ route('hotelManager.index') }}"
+@endhasanyrole
+
+
+@hasanyrole('Admin|Receptionist|Hotel Manager')
+<a href="{{ route('hotelManager.index') }}"
                        class="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded transition mt-4">
                         Hotel Reports
                     </a>
+
+                    @endhasanyrole
 
                 </div>
             </div>

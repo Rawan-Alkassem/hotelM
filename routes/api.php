@@ -40,3 +40,4 @@ Route::middleware(['auth:sanctum', 'check.booking.dates'])->group(function () {
     Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel']);
     // Route::post('/bookings/{id}/review', [BookingController::class, 'addReview']);
 });
+//git commit -m "Tayseer-AlKassas 0.4"

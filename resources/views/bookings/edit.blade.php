@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Booking #{{ $booking->id }}</h1>
+        <h1 class="text-2xl font-bold text-white mb-6">Edit Booking </h1>
 
         <!-- Display Validation Errors -->
         @if ($errors->any())

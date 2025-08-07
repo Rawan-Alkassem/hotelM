@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container mx-auto px-4 py-8">
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Booking Information #{{ $booking->id }}</h1>
+            <h1 class="text-2xl font-bold text-white">Booking Information #{{ $booking->id }}</h1>
             <a href="{{ route('bookings.index') }}" class="text-blue-600 hover:text-blue-800">
                 ← Back to Bookings
             </a>

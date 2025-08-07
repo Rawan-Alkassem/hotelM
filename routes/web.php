@@ -115,21 +115,10 @@ Route::post('/bookings/save-for-later', [RoomController::class, 'saveForLater'])
 
 
 
-//للمراجعة لاحقا 29/7/2025
-// Route::get('/bookings/filter', [BookingSearchController::class, 'filter'])
-// ->name('bookings.filter');
+
 
 Route::get('/bookings/filter', [BookingSearchController::class, 'index'])
 ->name('bookings.filter');
-// عل الحذف التلت رواتات
-// Route::post('/bookings/filter', [BookingSearchController::class, 'filterByStatus'])
-// ->name('bookings.filter');
-// Route::post('/bookings/filter-by-room', [BookingSearchController::class, 'filterByRoomType'])
-// ->name('bookings.filter.room');
-
-
-//      Route::get('/bookings/filter', [BookingSearchController::class, 'filterBookings'])
-// ->name('bookings.filter');
 
 });
 

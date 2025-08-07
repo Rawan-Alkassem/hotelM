@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
                 Employees Management
             </h2>
             <a href="{{ route('employeesmanagement.create') }}"
@@ -25,7 +25,7 @@
             @endif
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h2 class="text-lg font-bold text-gray-700 dark:text-gray-100 mb-4">Users with Roles (Except Customers)</h2>
+                <h2 class="text-lg font-bold text-gray-700 dark:text-gray-100 mb-4"> Employees </h2>
 
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white dark:bg-gray-900 border rounded">

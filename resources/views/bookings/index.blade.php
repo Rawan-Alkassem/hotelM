@@ -5,7 +5,7 @@
 
 
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Bookings Management</h1>
+            <h1 class="text-2xl font-bold text-white">Bookings Management</h1>
          <div class="flex space-x-4">
                  <div class="mt-6 text-left">
                 <a href="{{ route('dashboard') }}"
