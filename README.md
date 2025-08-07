@@ -1,6 +1,6 @@
 # 🏨 Hotel Management System (Laravel 12)
 
-A complete role-based hotel management system built with Laravel 12, featuring room and booking management, employee roles, hotel analytics, email notification and more. Designed for Admins, Receptionists, and Hotel Managers. 
+A complete role-based hotel management system built with Laravel 12, featuring room and booking management, employee roles, hotel analytics, API access for customers and visitors, and more. Designed for Admins, Receptionists, and Hotel Managers.
 
 ##  Admin Features
 
@@ -9,16 +9,33 @@ A complete role-based hotel management system built with Laravel 12, featuring r
 - 🧼 Manage Room Services
 - 👥 Manage Employees & Roles
 - 📆 Booking Management (with conflict checks)
+- 📧 Email Notifications when Admin creates a booking
 - 📊 Hotel Reports (Monthly, Yearly, By Room Type)
 - 📚 Booking Logs & Confirmation Flow
 - 📅 Calendar & Room Availability
 - 🔍 Booking Filtering (by status, type, etc.)
-- 📧 Email Notification when creating a booking by the admin 
+- 📧 Email Notification when creating a booking by the admin
+##  API Features
+
+The project provides RESTful API endpoints for customers and public visitors to interact with hotel services.
+
+### Visitors (unauthenticated):
+- View available rooms
+- Check room types and services
+
+### Customers (authenticated):
+- Register and login
+- Book rooms via API
+- View their booking history
+
+> API authentication is managed using Laravel Sanctum.
+
 ##  User Roles
 
 - **Admin**: Full access to all features
 - **Receptionist**: Bookings, calendar, limited access
 - **Hotel Manager**: View reports, dashboard
+- **Customer**: Can interact via API only
 
 ##  Tech Stack
 
@@ -27,9 +44,9 @@ A complete role-based hotel management system built with Laravel 12, featuring r
 - MySQL / SQLite
 - Laravel Breeze (auth scaffolding)
 - Spatie Laravel Permission
+- Laravel Sanctum (API authentication)
 - Vite for asset bundling
 - Composer + NPM
-- Smtp & Password App (for email notification) 
 
 ##  Installation Steps
 
@@ -87,6 +104,7 @@ php artisan serve
 
 - Laravel Breeze for authentication
 - Spatie Laravel Permission for roles
+- Laravel Sanctum for API token authentication
 - Roles and demo users are seeded
 - Session and queue drivers set to `database`
 
@@ -98,28 +116,12 @@ php artisan serve
 - Booking logs and conflict handling via middleware
 - Visual calendar for booking overview
 - Search and filtering system for bookings
+- API endpoints for booking and room listing
+- Email notifications on booking creation
 
-##  Screenshots
 
-_Add screenshots of Dashboard, Booking Calendar, and Room Management here._
-
-##  To-Do / Optional Improvements
-
-- Customer-facing booking module
-- Notifications (email/SMS)
-- Booking payment integration
+- Customer-facing web module
+- Payment integration for bookings
+- SMS notifications
 - Booking approval workflows
-
-##  Testing
-
-To run tests:
-```bash
-php artisan test
-```
-
-##  License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
 
