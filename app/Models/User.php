@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable,HasRoles;
-
+    use Notifiable;
     /**
      * The attributes that are mass assignable.
      *

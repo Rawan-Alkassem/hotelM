@@ -18,27 +18,27 @@ class RoomTypeSeeder extends Seeder
             [
                 'name' => 'Standard Single Room',
                 'description' => 'Single room with twin bed and standard view',
-                'price' => 180,
-                'max_rooms' => 15
+                'price' => 100,
+
             ],
              [
-                'name' => 'Standard Double Room',
+                'name' => 'Standard Suite',
                 'description' => 'Double room with queen bed and standard view',
-                'price' => 250,
-                'max_rooms' => 20
+                'price' => 200,
+
             ],
 
             [
                 'name' => 'VIP Single Room',
                 'description' => 'Luxury single room with queen bed and premium view',
-                'price' => 350,
-                'max_rooms' => 8
+                'price' => 300,
+
             ],
              [
-                'name' => 'VIP Double Room',
+                'name' => 'VIP Suite',
                 'description' => 'Luxury double room with king bed and premium view',
-                'price' => 450,
-                'max_rooms' => 10
+                'price' => 400,
+
             ],
         ];
 

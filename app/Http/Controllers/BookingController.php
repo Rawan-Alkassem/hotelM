@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Middleware\CheckBookingDates;
+use App\Notifications\BookingStatusChanged;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -44,82 +45,39 @@ public function __construct()
 //
 
 
-public function store(Request $request)
+      public function store(Request $request): RedirectResponse
 {
     $validated = $request->validate([
-        'user_id' => 'nullable|exists:users,id',
-     //   'receptionist_id' => 'required|exists:users,id',
+        'user_id' => 'required|exists:users,id',
         'room_id' => 'required|exists:rooms,id',
-        'check_in_date' => 'required|date|after_or_equal:today',
-        'check_out_date' => 'required|date|after:check_in_date',
-    ], [
+   'check_in_date' => 'required|date|after_or_equal:today',
+    'check_out_date' => 'required|date|after:check_in_date',
+       ], [
         'check_in_date.after_or_equal' => 'Check-in date must be today or a future date',
         'check_out_date.after' => 'Check-out date must be after check-in date',
         'room_id.required' => 'Please select a room',
         'room_id.exists' => 'The selected room does not exist',
-        'user_id.required' => 'Please select a customer',
     ]);
+     $data = $request->validate([
+            'room_id' => 'required|exists:rooms,id',
+            'check_in_date' => 'required|date|after_or_equal:today',
+            'check_out_date' => 'required|date|after:check_in_date',
+        ]);
 
-    // التأكد أن المستخدم المحدد لديه دور Customer
-    $customer = User::findOrFail($request->user_id);
-    if (!$customer->hasRole('Customer')) {
-        return back()->withErrors(['user_id' => 'The selected user is not a customer']);
-    }
+$room = Room::with('roomType')->findOrFail($data['room_id']);
 
     $days = Carbon::parse($request->check_in_date)
         ->diffInDays(Carbon::parse($request->check_out_date));
 
-    $validated['total_price'] = $days * 180;
+    $validated['total_price'] = $days * $room->roomType->price;
     $validated['status'] = 'pending';
-        $validated['user_id'] = 2;
 
-    // إنشاء الحجز
-    $booking = Booking::create($validated);
-
-    // إنشاء سجل الدخول والخروج المرتبط بالحجز
-    CheckInOutLog::create([
-        'booking_id' => $booking->id,
-        // 'receptionist_id' => $validated['receptionist_id'],
-        'check_in_time' => null, // سيتم تعيينه عند الدخول الفعلي
-        'check_out_time' => null // سيتم تعيينه عند الخروج الفعلي
-    ]);
+ $booking =   Booking::create($validated);
+ $booking->user->notify(new BookingStatusChanged($booking));
 
     return redirect()->route('bookings.index')
-        ->with('success', 'تم إنشاء الحجز بنجاح');
+        ->with('success', '  The booking has been successfully updated. ');
 }
-
-//       public function store(Request $request): RedirectResponse
-// {
-//     $validated = $request->validate([
-//         'user_id' => 'required|exists:users,id',
-//         'room_id' => 'required|exists:rooms,id',
-//    'check_in_date' => 'required|date|after_or_equal:today',
-//     'check_out_date' => 'required|date|after:check_in_date',
-//        ], [
-//         'check_in_date.after_or_equal' => 'Check-in date must be today or a future date',
-//         'check_out_date.after' => 'Check-out date must be after check-in date',
-//         'room_id.required' => 'Please select a room',
-//         'room_id.exists' => 'The selected room does not exist',
-//     ]);
-//      $data = $request->validate([
-//             'room_id' => 'required|exists:rooms,id',
-//             'check_in_date' => 'required|date|after_or_equal:today',
-//             'check_out_date' => 'required|date|after:check_in_date',
-//         ]);
-
-// $room = Room::with('roomType')->findOrFail($data['room_id']);
-
-//     $days = Carbon::parse($request->check_in_date)
-//         ->diffInDays(Carbon::parse($request->check_out_date));
-
-//     $validated['total_price'] = $days * $room->roomType->price;
-//     $validated['status'] = 'pending';
-
-//     Booking::create($validated);
-
-//     return redirect()->route('bookings.index')
-//         ->with('success', 'تم إنشاء الحجز بنجاح');
-// }
 
     // public function edit(Booking $booking)
     // {
@@ -151,6 +109,8 @@ public function store(Request $request)
             'check_out_date' => 'required|date|after:check_in_date',
         ]);
 
+
+
     // التأكد أن المستخدم المحدد لديه دور Customer
     $customer = User::findOrFail($request->user_id);
     if (!$customer->hasRole('Customer')) {
@@ -159,12 +119,17 @@ public function store(Request $request)
 
     $days = Carbon::parse($request->check_in_date)
         ->diffInDays(Carbon::parse($request->check_out_date));
+$room = Room::with('roomType')->findOrFail($validated['room_id']);
 
-    $validated['total_price'] = $days * 180;
+    $validated['total_price'] = $days * $room->roomType->price;
     $booking->update($validated);
 
+
+
+ $booking->user->notify(new BookingStatusChanged($booking));
+
     return redirect()->route('bookings.index')
-        ->with('success', 'تم تحديث الحجز بنجاح');
+        ->with('success', '  The booking has been successfully updated. ');
         // $days = Carbon::parse($request->check_in_date)
         //     ->diffInDays(Carbon::parse($request->check_out_date));
 
@@ -182,7 +147,7 @@ public function store(Request $request)
     {
         $booking->delete();
         return redirect()->route('bookings.index')
-            ->with('success', 'تم حذف الحجز بنجاح');
+            ->with('success', ' The booking has been successfully deleted.');
     }
     public function finish(Booking $booking)
 {
@@ -202,7 +167,7 @@ public function store(Request $request)
 
 public function info(Booking $booking)
 {
-    $booking->load(['user', 'room.roomType', 'receptionist', 'checkInOutLog.receptionist']);
+    $booking->load(['user', 'room.roomType', 'checkInOutLogs']);
 
     return view('bookings.info', compact('booking'));
 }
@@ -210,7 +175,7 @@ public function info(Booking $booking)
 
 public function editLog(Booking $booking)
 {
-    $booking->load(['checkInOutLog']);
+    $booking->load(['checkInOutLogs']);
     return view('bookings.edit-log', compact('booking'));
 }
 
@@ -220,16 +185,16 @@ public function updateLog(Request $request, Booking $booking){
         'check_out_time' => 'nullable|date|after:check_in_time',
     ]);
 
-    if (!$booking->checkInOutLog) {
+    if (!$booking->checkInOutLogs) {
         // إنشاء سجل جديد إذا لم يكن موجوداً
-        $booking->checkInOutLog()->create([
+        $booking->checkInOutLogs()->create([
             'receptionist_id' => auth()->id(),
             'check_in_time' => $validated['check_in_time'],
             'check_out_time' => $validated['check_out_time']
         ]);
     } else {
         // تحديث السجل الموجود
-        $booking->checkInOutLog->update([
+        $booking->checkInOutLogs->update([
             'check_in_time' => $validated['check_in_time'],
             'check_out_time' => $validated['check_out_time'],
             'receptionist_id' => auth()->id()
@@ -237,7 +202,7 @@ public function updateLog(Request $request, Booking $booking){
     }
 
     return redirect()->route('bookings.info', $booking->id)
-        ->with('success', 'تم تحديث أوقات الدخول والخروج بنجاح');
+        ->with('success', 'Check-in and check-out times have been successfully updated.');
 }
 
 public function confirmBooking(Request $request)
@@ -261,12 +226,13 @@ public function confirmBooking(Request $request)
         'total_price' => $validated['total_price'],
         'status' => 'confirmed'
     ]);
+ $booking->user->notify(new BookingStatusChanged($booking));
 
     // تحديث حالة الغرفة
     Room::where('id', $validated['room_id'])->update(['status' => 'booked']);
 
     return redirect()->route('bookings.index')
-                     ->with('success', 'تم تأكيد الحجز بنجاح!');
+                     ->with('success', 'The booking has been successfully confirmed!');
 }
 
 

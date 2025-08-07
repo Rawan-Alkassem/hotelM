@@ -40,6 +40,16 @@ class Room extends Model
     public function bookings() {
         return $this->hasMany(Booking::class, 'room_id');
     }
+ public function services()
+{
+    return $this->belongsToMany(Service::class, 'room_service');
+}
+
+
+    public function images()
+{
+    return $this->hasMany(RoomImage::class);
+}
 }
 
 

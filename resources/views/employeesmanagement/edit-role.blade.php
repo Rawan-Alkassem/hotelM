@@ -1,39 +1,3 @@
-{{-- <x-app-layout>
-
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
- <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-<div class="container">
-    <h2>Update Role for {{ $user->full_name }}</h2>
-
-    <form action="{{ route('employeesmanagement.update-role', $user) }}" method="POST">
-        @csrf
-        @method('PUT')
-
-        <div class="mb-3">
-            <label>Select New Role</label>
-            <select name="role" class="form-select">
-                @foreach($roles as $role)
-                    <option value="{{ $role }}" {{ $user->hasRole($role) ? 'selected' : '' }}>
-                        {{ $role }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        <button class="btn btn-success">Update Role</button>
-    </form>
-</div>
-
-
-
-</div>
-</x-app-layout> --}}
 
 
 <x-app-layout>

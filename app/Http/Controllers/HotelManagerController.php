@@ -17,7 +17,7 @@ class HotelManagerController extends Controller
     public function index()
     {
         // إحصائيات الحجوزات الشهرية
-        
+
 
         return view('hotelManager.index' );
     }
@@ -39,9 +39,9 @@ public function yearlyOccupancyReport(Request $request){
 
     // جلب أنواع الغرف للفلتر
     $roomTypes = RoomType::all();
-    
+
     // تحديد أنواع الغرف المراد عرضها
-    $selectedTypes = $roomTypeId 
+    $selectedTypes = $roomTypeId
         ? RoomType::where('id', $roomTypeId)->get()
         : $roomTypes;
 
@@ -91,7 +91,7 @@ public function yearlyOccupancyReport(Request $request){
             }
 
             $typeSummary['total_available_days'] += $totalRoomDays - $totalOccupiedDays;
-            
+
             $occupancyRate = $totalRoomDays > 0 ? ($totalOccupiedDays / $totalRoomDays) * 100 : 0;
             $availabilityRate = 100 - $occupancyRate;
 
@@ -105,12 +105,12 @@ public function yearlyOccupancyReport(Request $request){
                 'days_in_month' => $daysInMonth,
             ];
         }
-        
+
         // إضافة ملخص النوع إلى الإجمالي
         $summary['total_bookings'] += $typeSummary['total_bookings'];
         $summary['total_occupied_days'] += $typeSummary['total_occupied_days'];
         $summary['total_available_days'] += $typeSummary['total_available_days'];
-        
+
         $report[$type->name] = [
             'data' => $typeReport,
             'summary' => $typeSummary
@@ -119,10 +119,10 @@ public function yearlyOccupancyReport(Request $request){
 
     // حساب النسب الإجمالية
     $totalDaysInYear = $selectedTypes->isEmpty() ? 0 : $summary['total_rooms'] * 365;
-    $summary['occupancy_rate'] = $totalDaysInYear > 0 
-        ? round(($summary['total_occupied_days'] / $totalDaysInYear) * 100, 2) 
+    $summary['occupancy_rate'] = $totalDaysInYear > 0
+        ? round(($summary['total_occupied_days'] / $totalDaysInYear) * 100, 2)
         : 0;
-        
+
     $summary['availability_rate'] = 100 - $summary['occupancy_rate'];
 
     return view('hotelManager.yearly-occupancy', [
@@ -140,7 +140,7 @@ public function yearlyOccupancyReport(Request $request){
     $month = $request->input('month', now()->month);
     $year = $request->input('year', now()->year);
     $roomTypeId = $request->input('room_type_id'); // الفلتر الجديد
-    
+
     $startDate = Carbon::create($year, $month, 1)->startOfMonth();
     $endDate = $startDate->copy()->endOfMonth();
     $daysInMonth = $startDate->daysInMonth;
@@ -197,7 +197,7 @@ public function yearlyOccupancyReport(Request $request){
 
     $totalOccupiedSum = 0;
     $totalAvailableSum = 0;
-    
+
     foreach ($dailyOccupancy as $day => $data) {
         $totalOccupiedSum += $data['occupied'];
         $totalAvailableSum += $data['available'];
@@ -222,9 +222,9 @@ public function yearlyOccupancyReport(Request $request){
         'month' => $month,
         'year' => $year,
         'months' => [
-            1 => 'يناير', 2 => 'فبراير', 3 => 'مارس', 4 => 'أبريل',
-            5 => 'مايو', 6 => 'يونيو', 7 => 'يوليو', 8 => 'أغسطس',
-            9 => 'سبتمبر', 10 => 'أكتوبر', 11 => 'نوفمبر', 12 => 'ديسمبر'
+            1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
+            5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August',
+            9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
         ],
         'years' => range(now()->year - 2, now()->year + 1),
         'roomTypes' => RoomType::all(), // تمرير أنواع الغرف للفلتر

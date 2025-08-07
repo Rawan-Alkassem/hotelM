@@ -9,20 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-  public function up(): void {
-        Schema::create('room_type_services', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('room_type_id')->constrained('room_types')->onDelete('cascade');
-            $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
-            $table->timestamps();
+ public function up(): void
+    {
+        Schema::create('room_service', function (Blueprint $table) {  $table->id();
+    $table->foreignId('room_id')->constrained()->onDelete('cascade');
+    $table->foreignId('service_id')->constrained()->onDelete('cascade');
+    $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('room_type_services');
+        Schema::dropIfExists('room_service');
     }
 };

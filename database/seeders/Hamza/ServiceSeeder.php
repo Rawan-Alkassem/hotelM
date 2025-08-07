@@ -82,13 +82,13 @@ class ServiceSeeder extends Seeder
         RoomType::where('name', 'Standard Single Room')->first()
             ->services()->sync(Service::whereIn('name', $singleStandardServices)->pluck('id'));
 
-        RoomType::where('name', 'Standard Double Room')->first()
+        RoomType::where('name', 'Standard Suite')->first()
             ->services()->sync(Service::whereIn('name', $doubleStandardServices)->pluck('id'));
 
         RoomType::where('name', 'VIP Single Room')->first()
             ->services()->sync(Service::whereIn('name', $singleVipServices)->pluck('id'));
 
-        RoomType::where('name', 'VIP Double Room')->first()
+        RoomType::where('name', 'VIP Suite')->first()
             ->services()->sync(Service::whereIn('name', $doubleVipServices)->pluck('id'));
     }
 }

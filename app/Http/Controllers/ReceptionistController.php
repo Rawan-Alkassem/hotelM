@@ -15,6 +15,6 @@ class ReceptionistController extends Controller
             return view('recp/recpHome');
         }
 
-        return redirect()->route('login')->with('error', 'ليس لديك صلاحية الوصول إلى هذه الصفحة');
+        return redirect()->route('login')->with('error', '    You do not have permission to access this page.  ');
     }
 }

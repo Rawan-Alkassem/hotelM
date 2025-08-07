@@ -7,6 +7,12 @@
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Bookings Management</h1>
          <div class="flex space-x-4">
+                 <div class="mt-6 text-left">
+                <a href="{{ route('dashboard') }}"
+                   class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-gray-700">
+                    ← Back
+                </a>
+            </div>
     <!-- Filter Button -->
     <form action="{{ route('bookings.filter') }}" method="GET" class="flex">
         <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md flex items-center transition-colors">
@@ -18,14 +24,14 @@
     </form>
 
         <!-- Search Button -->
-    <form action="{{ route('rooms.availability') }}" method="GET" class="flex">
+    {{-- <form action="{{ route('rooms.availability') }}" method="GET" class="flex">
         <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md flex items-center transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             Search
         </button>
-    </form>
+    </form> --}}
 
     <!-- Create Button -->
     <a href="{{ route('bookings.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center transition-colors">
@@ -148,8 +154,19 @@
       <div class="mt-4 flex justify-end">
     {{ $bookings->links() }}
 </div>
+
+
+
             </div>
+
+
+
+
         </div>
+
+
     </div>
+
+
 </x-app-layout>
 

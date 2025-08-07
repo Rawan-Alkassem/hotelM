@@ -83,7 +83,7 @@ class RoomController extends Controller
             return RoomResource::collection($rooms);
         } catch (Exception $e) {
             return response()->json([
-                'message' => 'حدث خطأ أثناء جلب الغرف.',
+                'message' => 'An error occurred while fetching the rooms. ',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -98,10 +98,10 @@ class RoomController extends Controller
 
             return new RoomResource($room);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['message' => 'الغرفة غير موجودة أو غير متاحة.'], 404);
+            return response()->json(['message' => 'The room does not exist or is unavailable.'], 404);
         } catch (Exception $e) {
             return response()->json([
-                'message' => 'حدث خطأ أثناء عرض تفاصيل الغرفة.',
+                'message' => 'An error occurred while displaying the room details.',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -114,7 +114,7 @@ class RoomController extends Controller
             return RoomTypeResource::collection($types);
         } catch (Exception $e) {
             return response()->json([
-                'message' => 'حدث خطأ أثناء جلب أنواع الغرف.',
+                'message' => 'An error occurred while fetching the room types.',
                 'error' => $e->getMessage(),
             ], 500);
         }

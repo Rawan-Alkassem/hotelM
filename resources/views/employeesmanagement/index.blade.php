@@ -1,66 +1,3 @@
-{{--
- <x-app-layout>
-
-    <x-slot name="header">
-        <a href="{{ route('employeesmanagement.create') }}">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-add an employee
-        </h2>
-        </a>
-    </x-slot>
-
-    <div class="py-12">
- <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-<div class="container">
-    <h2 class="mb-4">Users with Roles (Except Customers)</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Registered At</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($users as $index => $user)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $user->full_name }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->getRoleNames()->implode(', ') }}</td>
-                    <td>{{ $user->created_at->format('Y-m-d H:i') }}</td>
-                    <td>
-    <form action="{{ route('employeesmanagement.destroy', $user) }}" method="POST" onsubmit="return confirm('Are you sure?');">
-        @csrf
-        @method('DELETE')
-        <button class="btn btn-danger btn-sm "> Delete</button>
-    </form>
-</td>
-<br>
- <td>
-    <form action="{{route('employeesmanagement.edit-role', $user) }}">
-        @csrf
-        <button class="btn btn-danger btn-sm "> change role</button>
-    </form>
-</td>
-
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="5" class="text-center">No users found.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
-</div>
-<div>
-
-</div>
-</x-app-layout> --}}
-
-
 
 <x-app-layout>
     <x-slot name="header">
@@ -134,6 +71,13 @@ add an employee
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            <div class="mt-6 text-left">
+                <a href="{{ route('dashboard') }}"
+                   class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-gray-700">
+                    ← Back
+                </a>
             </div>
         </div>
     </div>

@@ -58,6 +58,8 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::delete('/employeesmanagement/{user}', [EmployeeController::class, 'destroy'])->name('employeesmanagement.destroy');
 });
 
+
+
 // 👨‍💼 لوحة استقبال للموظف (Receptionist)
 Route::middleware(['auth'])->group(function () {
     Route::get('/receptionist', action: [ReceptionistController::class, 'index'])->name('receptionist.dashboard');
@@ -66,14 +68,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/report', [CalendarController::class, 'report'])->name('booking.report');
 
 
-    // Route::resource('bookings', BookingController::class)
-    // ->middleware('check.booking.dates', ['only' => ['store']]);
-  //  Route::resource('bookings', BookingController::class)
-  //  ->except(['show'])
-   // ->middleware('check.booking.dates', ['only' => ['store']]);
-
- //   Route::put('/bookings/{booking}/finish', [BookingController::class, 'finish'])
-  //  ->name('bookings.finish');
 
 //الحجوزات
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
@@ -109,12 +103,7 @@ Route::post('/bookings/confirmBooking', [BookingController::class, 'confirmBooki
 
     ->where(['year' => '\d{4}', 'month' => '\d{1,2}'])
     ->name('calendar');
-// Route::get('/bookings/check-availability', [BookingController::class, 'checkAvailability'])
-//     ->name('bookings.checkAvailability');
-// Route::get('/rooms/search', [BookingSearchController::class, 'searchAvailableRooms'])
-//     ->name('rooms.search');
-// Route::get('/rooms/search/results', [BookingController::class, 'searchResults'])
-//     ->name('bookings.results');
+
 
 
 Route::get('/rooms/availability', [RoomController::class, 'checkRoomAvailability'])

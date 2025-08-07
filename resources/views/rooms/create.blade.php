@@ -24,7 +24,7 @@
             }
         </style> -->
 
-        <form action="{{ route('rooms.store') }}" method="POST" class="space-y-4">
+        <form action="{{ route('rooms.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div>
@@ -56,6 +56,17 @@
                     <option value="maintenance" {{ old('status') == 'maintenance' ? 'selected' : '' }}>Maintenance</option>
                 </select>
             </div>
+            <!-- <div class="mb-4">
+    <label for="images" class="block text-white font-bold mb-2">Room Images</label>
+    <input type="file" name="images[]" id="images" multiple
+           class="w-full p-2 border rounded bg-gray-800 text-white">
+</div> -->
+<div id="images-wrapper">
+  <div class="image-input mb-4 flex items-center space-x-2">
+    <input type="file" name="images[]" class="w-full p-2 border rounded bg-gray-800 text-white" />
+    <button type="button" id="add-image-btn" class="bg-green-700 text-white px-3 rounded">+</button>
+  </div>
+</div>
 
             <div class="flex space-x-4 mt-4">
                 <button type="submit" class="bg-green-900 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded">
@@ -69,3 +80,32 @@
         </form>
     </div>
 </x-app-layout>
+<script>
+document.getElementById('add-image-btn').addEventListener('click', function() {
+    const wrapper = document.getElementById('images-wrapper');
+
+    // إنشاء div جديد للحقل مع زر حذف
+    const newInputDiv = document.createElement('div');
+    newInputDiv.classList.add('image-input', 'mb-4', 'flex', 'items-center', 'space-x-2');
+
+    // حقل رفع جديد
+    const newInput = document.createElement('input');
+    newInput.type = 'file';
+    newInput.name = 'images[]';
+    newInput.classList.add('w-full', 'p-2', 'border', 'rounded', 'bg-gray-800', 'text-white');
+
+    // زر حذف للحقل الجديد
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.textContent = '-';
+    removeBtn.classList.add('bg-red-600', 'text-white', 'px-3', 'rounded');
+    removeBtn.addEventListener('click', () => {
+        wrapper.removeChild(newInputDiv);
+    });
+
+    newInputDiv.appendChild(newInput);
+    newInputDiv.appendChild(removeBtn);
+
+    wrapper.appendChild(newInputDiv);
+});
+</script>

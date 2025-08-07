@@ -6,6 +6,7 @@ use App\Http\Requests\RoomTypeRequest;
 use App\Http\Requests\StoreRoomTypeRequest;
 use App\Models\Room;
 use App\Models\RoomType;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class RoomTypeController extends Controller
@@ -53,8 +54,9 @@ class RoomTypeController extends Controller
      */
     public function edit(string $id)
     {
-        $roomType = RoomType::findOrFail($id);
-        return view('room-types.edit', compact('roomType'));
+          $roomType = RoomType::findOrFail($id);
+        $services = Service::all();
+        return view('room-types.edit', compact('roomType', 'services'));
     }
 
 
@@ -64,8 +66,10 @@ class RoomTypeController extends Controller
      */
     public function update(RoomTypeRequest $request, string $id)
     {
-        $roomType = RoomType::findOrFail($id);
+       $roomType = RoomType::findOrFail($id);
         $roomType->update($request->validated());
+        $roomType->services()->sync($request->input('services', []));
+
 
         return redirect()->route('room-types.view')->with('success', 'تم تعديل نوع الغرفة بنجاح');
     }

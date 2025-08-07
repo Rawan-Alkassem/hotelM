@@ -22,13 +22,13 @@ class RoleSeeder extends Seeder
         }
 
         // تعيين الدور Receptionist للمستخدم الثاني (ID = 2)
-        $receptionist = User::find(2);
+        $receptionist = User::find(3);
         if ($receptionist && !$receptionist->hasRole('Receptionist')) {
             $receptionist->assignRole($receptionistRole);
         }
 
         // تعيين الدور Hotel Manager للمستخدم الثالث (ID = 3)
-        $hotelManager = User::find(3);
+        $hotelManager = User::find(2);
         if ($hotelManager && !$hotelManager->hasRole('Hotel Manager')) {
             $hotelManager->assignRole($hotelManagerRole);
         }
